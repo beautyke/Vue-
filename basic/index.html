@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World!</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">{{content}}</div>
+    <div>{{content}}</div>
+    <script>
+        //原生js
+        // var dom = document.getElementById('app'); //返回对拥有指定 ID 的第一个对象的引用。
+        // dom.innerHTML = 'hello word';//对某对象插入内容
+        // setTimeout(function(){
+        //     dom.innerHTML ='bye world'
+        // },2000)//对dom进行操作
+        
+        //vue
+        var app = new Vue({
+            el:'#app',
+            data:{
+                content:'hello world'
+            }
+        })
+        setTimeout(function(){
+            app.$data.content='bye world'
+        },2000)//不需要关注dom上的操作，只需要对数据变更，页面自动会变化
+    </script>
+</body>
+</html>
