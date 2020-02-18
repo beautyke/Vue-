@@ -14,13 +14,39 @@
         <ul>
             <!-- <li>第一课的内容</li>
             <li>第二课的内容</li> -->
-            <li v-for="item in list">{{item}}</li>
+            <!-- <li v-for="item in list">{{item}}</li> -->
             <!-- v-for帮助循环数据，循环list，把循环出的每一项放到item里 -->
+            <todo-item  v-bind:content="item" v-bind:index="index" v-for="(item,index) in list" @delete="handleItemDelete"></todo-item>
+            <!-- v-bind可以省略掉。留一个冒号就可以
+                @delete="handleItemDelete" 监听子组件delete事件，一旦被触发，立即执行父组件里的handleItemDelete这个方法-->
         </ul>
     </div>
     <script>
+        // Vue.component给我们用来创建全局组件的方法. 逻辑：定义了一个名为TodoItem的组件，在模板里面使用todo-item，通过list来决定要输出几个todo-item组件，同时把每个item通过v-bind语法，借助content变量来传给todo-item组件，props接受content
+        // Vue.component("TodoItem",{
+        //     props:['content'],//接收content
+        //     template:"<li>{{content}}</li>"//
+        // })
+
+        //局部组件
+        var TodoItem ={
+            props: ['content','index'],
+            template: "<li @click='handleItemClick'>{{content}}</li>", //在子组件中放入click事件
+            methods: {
+                handleItemClick: function(){
+                    this.$emit("delete",this.index);// emit用来实现子组件向父组件传值
+                },
+               
+            }
+
+        }
+
+
         var app = new Vue({
             el:'#app',
+            components: {
+                TodoItem:TodoItem
+            },//注册一下这个组件
             data:{
                 list:[],
                 inputValue:''
@@ -29,6 +55,10 @@
                 handleBtnClick: function(){
                     this.list.push(this.inputValue)
                     this.inputValue = ''
+                },
+                handleItemDelete: function(index){
+                    //  alert(index);
+                    this.list.splice(index,1); //splice() 方法向/从数组中添加/删除项目，然后返回被删除的项目。
                 }
             },
         })//我们并没有对dom操作，整个都是只对数据进行操作。
