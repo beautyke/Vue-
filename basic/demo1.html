@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- <div v-on:click='handleClick'> -->
+            <div @click='handleClick'>    
+        {{message}}
+        </div>
+        <item></item>
+    </div>
+
+    <script>
+        //除了底下那个根实例，任意一个组件都是一个vue实例，例如我底下定义一个组件叫item，内容定义一个div在其中。
+        Vue.component('item',{
+            template:'<div>hello world</div>'
+        })
+        var vm = new Vue({
+            el:'#root',
+            data: {
+                message:'hello world'
+            },
+            methods:{
+                handleClick:function(){
+                    alert("hello")
+                }
+            }
+        })
+    </script>
+</body>
+</html>
