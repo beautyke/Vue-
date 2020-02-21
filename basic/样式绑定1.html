@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>样式绑定1</title>
+    <script src="./vue.js"></script>
+    <style>
+        .activated{
+            color: red ;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div @click="handleDivClick" :class="[activated,activatedOne]">Hello World!</div>
+        <!-- 我们的class还可以和一个数组中相绑定 ，数组的内容是一个变量，这个class会显示变量的内容，可以写多个变量-->
+
+        <!-- <div @click="handleDivClick" :class="{activated: isActivated}">Hello World!</div> -->
+        <!-- 这个方法是class的对象绑定   :class="{activated: isActivated}" div元素上要有一个class，名为activated，这个class显不显示取决于数据里的isActivated这个变量 -->
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data:{
+                // isActivated:false
+                activated: "",
+                activatedOne: "activatedOne"
+            },
+            methods: {
+                handleDivClick: function(){
+                    // this.isActivated = !this.isActivated;//取非这样每一次点击都会改变。
+
+                    // if(this.activated === "activated"){
+                    //     this.activated = ""
+                    // }else{
+                    //     this.activated = "activated"
+                    // }
+                    //上面的代码有点冗余，所以下面改为三目运算符？ ：来写
+                    this.activated = this.activated === "activated" ? "" : "activated"
+                    
+                }
+            }
+        })
+    </script>
+    
+</body>
+</html>

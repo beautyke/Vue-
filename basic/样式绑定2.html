@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>样式绑定2</title>
+    <script src="./vue.js"></script>
+    <style>
+        .activated{
+            color: red ;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- <div :style="styleObj" @click="handleDivClick">Hello World!</div> -->
+        <!-- styleObj是数据中的一项，下面data中-->
+        
+        <!-- 也可以用数组，div显示的样式，由数组里面的对象决定，可以挂载多个对象。 -->
+        <div :style="[styleObj,{fontSize: '20px'}]" @click="handleDivClick">Hello World!</div>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                styleObj:{
+                    color:"black"
+                }
+            },
+            methods: {
+                handleDivClick: function(){
+                    this.styleObj.color = this.styleObj.color === "black" ? "red" : "black";
+                }
+            }
+        })
+    </script>
+    
+</body>
+</html>
