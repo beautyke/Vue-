@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>条件渲染</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div v-if="show">
+            用户名：<input key="username"/>
+        </div>
+        <div v-else>
+            邮箱名：<input key="password"/>
+        </div>
+        <!-- 某个元素标签加上key值的时候，vue就知道它是唯一的一个元素，两个key值不一样，vue就不会复用那个标签了 -->
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                show: false
+            }
+        })
+    </script>
+</body>
+</html>

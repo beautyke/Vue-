@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>条件渲染</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div v-if="show === 'a'">This si a</div>
+        <div v-else-if="show === 'b'">This is b</div>
+        <div v-else>This is other</div>
+        <!-- 还可以这样子写哦 -->
+
+
+        <!-- <div v-if="show">{{message}}</div>
+        <div v-else>Bye World</div> -->
+        <!-- v-if和v-else要紧贴着使用 -->
+
+        <!-- <div v-show="show">{{message}}</div> -->
+        <!-- v-if只要其中的变量是false，那它就不存在dom之上了，但是v-show，这个标签在对应dom还会在页面上，只是变成display：none了。在经常改变一个dom元素隐藏还是显示，用v-show，性能会比较好 -->
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                show: "a"
+                
+                // show:false,
+                // message: "Hello World"
+            }
+        })
+    </script>
+</body>
+</html>
