@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">{{fullName}}</div>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                firstName:"Beauty",
+                lastName:"Ke"
+            },
+            computed: {
+                // fullName: function(){
+                //     return this.firstName + " " + this.lastName
+                // }
+                //换种方法，写成对象。当使用这个计算属性fullName的时候，它会走get这个方法。set会接收到外部传来的value，当去设置这个fullName属性值的时候，会调用set。
+                fullName: {
+                    get: function(){
+                        return this.firstName + " " + this.lastName
+                    },
+                    set: function(value){
+                        var arr = value.split(" ");//拿到fullName的值，把它打散后赋值给数值，间接改变firstName和lastName的值。
+                        this.firstName = arr[0];
+                        this.lastName = arr[1];
+                        // console.log(value);
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>
