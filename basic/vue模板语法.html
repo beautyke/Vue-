@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    
+    <div id="app">
+        <!-- {{name}}插值表达式 -->
+        <div>{{name}}</div>
+
+        <!-- 这个v-text里面的值是js的表达式。显示的是data里面的name的内容,会对内容进行转义。注意还可以加字符串一起显示-->
+        <div v-text="name + 'lee'"></div>
+
+        <!-- 它让HTML的innerdiv和data里的name绑定,会直接输出。注意还可以加字符串一起显示-->-->
+        <div v-html="name + 'lee'"></div>
+
+        
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                name:"<h1>Dell</h1>"
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <!-- <div id="app">{{firstName +" "+ lastName}}</div> -->
+    <div id="app">{{fullName}} {{age}}</div>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                firstName: "Beauty",
+                lastName: "Ke",
+                fullName: "Beauty Ke",
+                age:22
+            },
+            // watch 侦听器 ,监听着firstName和lastName,watch也是具备缓存机制，和computed类似。
+            watch: {
+                firstName: function(){
+                    console.log("计算了一次");
+                    this.fullName = this.firstName +" "+ this.lastName;
+                },
+                lastName: function(){
+                    console.log("计算了一次");
+                    this.fullName = this.firstName +" "+ this.lastName;
+                },
+            }
+        
+            // //用方法,不如计算属性有效率，页面只要重新渲染，这个方法就会重新执行一次
+            // methods:{
+            //     fullName: function(){
+            //         return this.firstName +" "+ this.lastName
+            //     }
+            // },
+
+            //计算属性,它有个重要的属性内置缓存的
+            // computed: {
+            //     fullName: function(){
+            //         console.log("计算了一次");//fullName这个计算属性依赖firstName和lastName这个两个变量，只要变量没有变，计算属性一直使用上一次计算的结果。否则反之
+            //         return this.firstName + " " + this.lastName
+            //     }
+            // },
+        })
+    </script>
+</body>
+</html>
