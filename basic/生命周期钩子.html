@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+    <!-- <img src="./img/lifecycle.png" alt=""> -->
+    <script>
+        //生命周期函数就是vue实例在某一个时间点会自动执行的函数，初始化事件或函数后，到达beforecreate函数这个时间点就会自动执行。也有一些其它的钩子，在实例生命周期的不同阶段被调用，如 created、beforeMount、mounted、updated 和 destroyed等。
+        var vm = new Vue({
+            el:"#app",
+            template:"<div>{{test}}</div>",
+            data: {
+                test:"Hello World"
+            },
+            //当vue实例进行基础的初始化之后，它会帮助我们自动调用beforeCreate。
+            beforeCreate: function(){
+                console.log("beforeCreate");
+            },
+            //接着vue就会继续处理外部注入和双向绑定，然后created就会自动执行。
+            created: function(){
+                console.log("created");
+            },
+            //有了模板有了数据之后，没有直接去把模板渲染到页面上，在渲染之前，这个节点会自动生成一个函数beforeMount。
+            beforeMount: function(){
+                console.log(this.$el);//查看一下页面有没有挂载好
+                console.log("beforeMount");
+            },
+            //之后dom元素会挂载到页面上，也就是显示了helloworld。然后会自动调用mounted函数
+            mounted: function(){
+                console.log(this.$el);
+                console.log("mounted");
+            },
+            //没有被输出，当调用vm.$destroy(),它才会自动执行
+            beforeDestroy: function(){
+                console.log("beforeDestroy");
+            },
+            //销毁之后，destroyed自动执行
+            destroyed: function(){
+                console.log("destroyed");
+            },
+            //当数据发生改变，重新渲染开始之前，自动执行beforeUpdate
+            beforeUpdate: function(){
+                console.log("beforeUpdate");
+            },
+            //重新渲染之后执行
+            update: function(){
+                console.log("update");
+            },
+        })
+    </script>
+</body>
+</html>
