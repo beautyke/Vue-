@@ -25,7 +25,7 @@
         </div>
     </div>
     <script>
-        //push pop shift unshfit splice sort reverse  这是vue中七种数组变异方法
+        //push pop shift unshfit splice sort reverse  这是vue中七种数组变异方法 。还可以使用Vue的set方法来改数组，例Vue.set(vm.userInfo,1,5)。还可以使用实例的set方法，例vm.$set(vm.userInfo,1,5)
         var vm = new Vue({
             el:"#app",
             data: {
@@ -44,7 +44,7 @@
                 //     },
                     
                 // ]
-
+                //我们改变对象。可以直接修改整个对象。还有一种方法哦，可以使用vue的set方法来，例如Vue.set(vm.UserInfo,"address","beijing")。还可以通过实例方法来用哦，例如vm.$set(vm.userInfo,"address","beijing")。
                 userInfo:{
                     name: "ke",
                     age: 22,
