@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 数组做循环 -->
+        <!-- <div v-for="(item,index) of list" :key="item.id">{{item.text}}-----{{index}}</div> -->
+        
+        <!-- 不想在出现一个div包裹元素，就可以用template模板占位符，它不会被渲染大哦页面上。 -->
+        <!-- <template v-for="(item,index) of list" :key="item.id">
+            <div>
+                {{item.text}}-----{{index}}
+            </div>
+            <span>{{item.text}}</span>
+        </template> -->
+
+        <!-- 对象做循环 -->
+        <div v-for="(item,key,index) of userInfo">
+            {{item}}----{{key}}----{{index}}
+        </div>
+    </div>
+    <script>
+        //push pop shift unshfit splice sort reverse  这是vue中七种数组变异方法
+        var vm = new Vue({
+            el:"#app",
+            data: {
+                // list: [
+                //     {
+                //         id:"001230201",
+                //         text:"hello"
+                //     },
+                //     {
+                //         id:"001230202",
+                //         text:"ke"
+                //     },
+                //     {
+                //         id:"001230203",
+                //         text:"nice"
+                //     },
+                    
+                // ]
+
+                userInfo:{
+                    name: "ke",
+                    age: 22,
+                    gender: "male",
+                    salary: "secret"
+                }
+            }
+        })
+    </script>
+</body>
+</html>
