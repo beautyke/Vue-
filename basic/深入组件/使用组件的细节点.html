@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <div ref='hello' @click="handleClick">hello world</div>
+        <!-- 在特殊情况下，必须要对dom进行操作，我给这个div一个ref引用，引用名字叫hello。 -->
+        <!-- <table>
+            <tbody>
+                <tr is="row"></tr>
+                <tr is="row"></tr>
+                <tr is="row"></tr>
+            </tbody>
+            
+        </table>      -->
+    </div>
+    <!-- 因为table表格底下tbody底下必须是tr，不然会有bug。那我要使用这个组件，但是我不能直接使用，我用is来表示这个不是tr，是名叫row的组件，这样就不会有bug了。同理ul，ol里面要li。select里面要option-->
+    <script>
+    //    Vue.component('row', {
+    //        data: function(){
+    //            return {
+    //                content: 'this is content'
+    //            }
+    //        },
+    //        template: '<tr><td>{{content}}</td></tr>'
+    //    })
+       // 在根组件中定义data为对象是可以的，但是在非根组件和子组件，不能直接定义为对象，必须定义为函数, 同时也要求返回一个对象，这个对象里面要包含你要返回的数据。这是因为一个子组件会调用多次。每个子组件都会有自己的数据，不共享数据，这样不会互相影响。
+       
+       var vm = new Vue({
+           el: '#root',
+           methods: {
+               handleClick: function(){
+                   alert(this.$refs.hello.innerHTML)//this.$refs是获取全部的dom节点，然后再接着获取名叫hello的dom节点
+               }
+           },
+       })
+    </script>
+</body>
+</html>
