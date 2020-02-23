@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计数器</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    
+    <div id="root">
+        <counter ref="one" @change="handleChange"></counter>  
+        <counter ref="two" @change="handleChange"></counter>
+        <div>{{total}}</div>          
+    </div>
+    <script>
+        // 创建一个子组件的名字叫counter
+        Vue.component('counter',{
+            template:'<div @click="handleClick">{{number}}</div>',
+            data:function(){
+                return {
+                    number: 0
+                }
+            },
+            methods: {
+                handleClick: function(){
+                    this.number ++;
+                    this.$emit('change')
+                }
+            }
+        })
+        var vm = new Vue({
+            el: "#root",
+            data: {
+                total:0
+            },
+            methods: {
+                handleChange: function(){
+                    this.total = this.$refs.one.number + this.$refs.two.number
+                }
+                // 此时的ref获得的是子组件的引用
+            }
+        })
+    </script>
+</body>
+</html>
