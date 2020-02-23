@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <child content="hell"></child>
+    </div>
+
+    <script>
+        //props特性：当你的父组件使用子组件的时候，通过属性向子组件传值，恰好子组件里面声明了对父组件传递过来的属性的接收。其特点这个属性的传递不会在我们的dom上显示的，父组件传递过来的属性，我们可以在template中用插值表达式获取到。
+        //非props特性：父组件向子组件传递了一个属性，但是子组件没有props，没有声明。这个非props属性会显示在子组件最外面的dom标签是上。
+
+        Vue.component('child',{
+            props: {
+                content:{
+                    type:String,
+                    // required: false,
+                    // default: 'default value'
+                    validator: function(value){
+                        return (value.length > 5)
+                    }
+                    //将传入的值，进行一个校验，传入的字符串的长度要大于5，如果传入的长度小于就会出现警告
+                } 
+                //对父组件传递过来的值进行一些约束，例如content: [Number, String]传过来的值要是一个字符串 或者是数字。不仅仅可以这样子还可以跟一个对象，例如content:{type:String,required: false,default: 'default value'} ,required:true的意思是子组件要接收content属性，这个属性是必传的.
+            },
+            template: '<div>{{content}}</div>'
+        })
+        var vm = new Vue({
+            el: "#root"
+        })
+    </script>
+</body>
+</html>
