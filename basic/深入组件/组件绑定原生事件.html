@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原生事件</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <child @click.native="handleClick"></child>
+        <!-- 这个是内部向外触发的自定义的事件，一种是要到子组件this.$emit('click')触发。那假如我就想要监听到内部原生事件，可以在click后面加一个事件修饰符native-->
+    </div>
+    <script>
+        Vue.component('child',{
+            template: '<div>Child</div>'
+            // template: '<div @click="handleChildClick">Child</div>',
+            // methods: {
+            //     handleChildClick: function(){
+            //         alert('ChildClick');
+            //         this.$emit('click')
+                    
+            //     }
+            // }
+        })
+        var vm = new Vue({
+            el: '#root',
+            methods: {
+                handleClick: function(){
+                    alert('click')
+                }
+            }
+        })
+    </script>
+</body>
+</html>
