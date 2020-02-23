@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>父子组件间的数据传递</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- 父组件通过属性来向子组件传递数据,子组件通过事件触发像父组件传值-->
+        <counter :count="3" @inc="handleIncrease"></counter>
+        <counter :count="2" @inc="handleIncrease"></counter>
+        <!-- 一旦监听到之后就触发handleIncrease事件 -->
+        <div>{{total}}</div>
+    </div>
+    <script>
+        var counter = {
+            props: ['count'],//父组件传递数据，子组件要接收一下,子组件可以用父组件传过来的内容，但是不能修改，Vue之中有单向数据流的概念，一旦子组件接收的不是基础类型，而是例如object，引用型的数据的时候，假如其他组件也有引用，这样就会出现问题。那么我们要怎样使用呢，就是在data中复制一份，使用复制的那份
+            data: function(){
+                return {
+                    number: this.count
+                }
+            },
+            template: '<div @click="handleClick">{{number}}</div>',
+            methods: {
+                handleClick: function(){
+                    this.number = this.number + 2; 
+                    this.$emit('inc',2) // 子组件触发，告诉父组件每次新增加2，然后再在父组件那边监听
+                }
+            }
+
+        }
+        var vm = new Vue({
+            el: '#root',
+            data: {
+                total: 5
+            },
+            components: {
+                counter:counter
+            },
+            methods: {
+                handleIncrease: function(step){
+                    //执行这个事件处理的方法，可以接收到参数step
+                    this.total += step;
+                }
+            }
+        })
+    </script>
+</body>
+</html>
