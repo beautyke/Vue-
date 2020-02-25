@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue中使用插槽</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <!-- <div id="root">
+        <child>
+            <p>Ke</p>
+            
+        </child>
+    </div> -->
+    <!-- <p>Ke</p>插槽，可以更方便的向子组件传递dom元素，同时子组件使用插槽的内容，用<slot></slot>。它还能定义默认内容，直接定义在<slot>默认内容</slot>中就可以了-->
+    <!-- <script>
+        Vue.component('child',{
+            template: '<div><p>hello</p><slot></slot></div>'
+        })
+        var vm = new Vue({
+            el: '#root'
+        })
+    </script> -->
+
+    <div id="root">
+        <body-content>
+            <div class='header' slot='header'>header</div>
+            <div class='footer' slot='footer'>footer</div>
+        </body-content>
+    </div>
+    <script>
+        // 我们需要从外部接收两个插槽的内容，上面父组件调用子组件的时候，它在里面插入了名叫slot='header'和slot='footer'的插槽，和子组件里面的name对应上。这样父组件就能一次性传递多个区域的dom结构，在子组件里面通过具名插槽分别的来使用不同部分的dom结构。
+        Vue.component('body-content',{
+            template: `<div>
+                            <slot name='header'></slot>
+                            <div class="content">content</div>
+                            <slot name='footer'></slot>
+                        </div>`
+        })
+        var vm = new Vue({
+            el: '#root'
+        })
+    </script> 
+</body>
+</html>
