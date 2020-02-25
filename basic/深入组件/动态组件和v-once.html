@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动态组件和v-once指令</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="root">
+
+        <!-- <component :is="type"></component> -->
+        <!-- 动态组件component，它会根据is里面数据的变化，自动的加载不同的组件。-->
+
+        <child-one v-if="type === 'child-one'"></child-one>
+        <child-two v-if="type === 'child-two'"></child-two>
+        <button @click="handleBtnClick">change</button>
+    </div>
+
+    <script>
+
+        Vue.component('child-one',{
+            template: '<div v-once>child-one</div>'
+        })
+        // 加上v-once指令好处：当child-one第一次被渲染的时候，因为它有v-once指令，所以它会直接放到内存里，当我再次点击到child-one时，它会从内存里直接拿出child-one组件，不需要再次生成，性能会提高。
+        Vue.component('child-two',{
+            template: '<div v-once>child-two</div>'
+        })
+
+        var vm = new Vue({
+            el: "#root",
+            data: {
+                type: 'child-one'
+            },
+            methods: {
+                handleBtnClick: function(){
+                    this.type = this.type === 'child-one' ? 'child-two' : 'child-one'
+                }
+            },
+        })
+    </script>
+</body>
+</html>
