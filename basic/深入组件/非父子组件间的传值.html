@@ -4,9 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>非父子组件间的传值</title>
+    <script src="./vue.js"></script>
 </head>
 <body>
-    <div></div>
-    
+    <div id="root">
+        <child content="Beauty" ></child>
+        <child content="Ke" ></child>
+    </div>
+    <!-- 解决非父子组件间的传值有两种方法，第一种可以借助Vue官方提供的一个数据层的框架Vuex，还有使用发布订阅模式，在Vue中称为总线机制。-->
+    <script>
+        Vue.prototype.bus = new Vue() // 在Vue的prototype上挂载了一个bus的属性，这个属性指向Vue的实例，只要我们之后调用Vue或者创建组件的时候，每一个组件都会有bus属性，因为每个组件或者每个Vue的实例都是通过Vue这个类来创建的，而我在Vue的类上挂载了bus属性，而且是挂载在Vue的prototype上。
+        Vue.component('child',{
+            data: function(){
+                return {
+                    selfContent: this.content
+                }
+            },
+            props:{
+                content:String
+            },
+            template: '<div @click="handleClick">{{selfContent}}</div>',
+            methods: {
+                handleClick: function(){
+                    this.bus.$emit('change', this.selfContent) //利用$emit这个方法向外触发事件,这个事件触发的时候，同时携带了一个数据content，
+                }
+            },
+            // 利用生命周期钩子来监听change事件
+            mounted: function() {
+                var this_ = this
+                this.bus.$on ('change',function(msg){
+                    this_.selfContent = msg; //this作用域发生了变化，所以把this做一个保存，使用这个保存的this_
+                })
+            }
+        })
+        var vm = new Vue({
+            el: "#root"
+        })
+    </script>
 </body>
 </html>
