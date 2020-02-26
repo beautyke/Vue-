@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多个元素或组件的过渡</title>
+    <script src="./vue.js"></script>
+    <style>
+        .v-enter, .v-leave-to{
+            opacity: 0;
+        }
+        .v-enter-active, .v-leave-active{
+            transition: opacity 1s;
+        }
+    </style>
+</head>
+<body>
+    <!-- 解决dom复用，给元素增加key值。多个元素过渡
+    在transition还提供了配置参数mode来设置多个属性切换的效果，如下设置为in-out，效果就是多个元素切换，先进入在隐藏。设置为out-in，就是先隐藏在进入-->
+    <div id="root">
+        <transition mode="out-in">
+            <component :is='type'></component>
+
+            <!-- <div v-if="show" key="hello">Hello World</div>
+            <div v-else key="bye">Bye World</div> -->
+        </transition>
+        <button @click="handleClick">toggle</button>
+    </div>
+    <script>
+        //实现组件过渡，通过动态组件来实现
+        Vue.component('child', {
+            template: '<div>child</div>'
+        })
+        Vue.component('child-one', {
+            template: '<div>child-one</div>'
+        })
+
+
+        var vm = new Vue({
+            el: "#root",
+            data: {
+                // show: true
+                type: 'child'
+            },
+            methods: {
+                handleClick: function(){
+                    // this.show = !this.show
+                    this.type = this.type === 'child' ? 'child-one' : 'child'
+                }
+            }
+        })
+    </script>
+</body>
+</html>
