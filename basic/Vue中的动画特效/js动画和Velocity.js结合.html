@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js动画和Velocity.js结合</title>
+    <script src="./vue.js"></script>
+    <script src="./velocity.min.js"></script>
+</head>
+<body>
+    <div id="root">
+        <transition name="fade" @before-enter="handleBeforeEnter" @enter="handleEnter" @after-enter="handleAfterEnter">
+            <div v-show="show">Hello world</div>
+        </transition>
+        <button @click="handleClick">toggle</button>
+    </div>
+    <!-- js入场动画钩子，@before-enter，还有@enter它会接收两个参数el和done，el是元素，done是个回调函数。@enter 会在@before-enter执行完之后开始执行 。当done这个回调函数执行完后，会执行@after-enter。当然也有出场动画@before-leave，@leave，@after-leave，用法和入场动画一样哦-->
+    <script>
+        var vm = new Vue({
+            el: "#root",
+            data: {
+                show: true
+            },
+            methods: {
+                handleClick: function(){
+                    this.show = !this.show
+                },
+                handleBeforeEnter: function(el){
+                    el.style.opacity = 0
+
+                    // el.style.color = 'red'
+                },
+                handleEnter: function(el, done){
+                    //借助Velocity.js这个动画库，可以很方便通过一些简单的语法实现想要的效果。
+                    Velocity(el, {opacity: 1}, {duration: 1000, complete :done} )
+
+                    // setTimeout(()=>{
+                    //     el.style.color = 'green'
+                    //     // done() //要手动执行一下这个回调函数，告诉Vue我的动画已经执行完了
+                    // },2000)
+                    // setTimeout(()=>{
+                    //     done() //为了更直观的看到，把结束放在四秒
+                    // },4000)
+                },
+                handleAfterEnter: function(el){
+                    alert("动画结束")
+
+                    // el.style.color = 'black'
+                }
+
+            }
+        })
+    </script>
+</body>
+</html>
