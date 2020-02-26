@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用animate.css库</title>
+    <script src="./vue.js"></script>
+    <link rel="stylesheet" type="text/css" href="./animate.css">
+
+    <!-- <style>
+        @keyframes bounce-in{
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.5);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        .active{
+            transform-origin: left center;
+            animation: bounce-in 1s;
+        } 
+        .leave{
+            transform-origin: left center;
+            animation: bounce-in 1s reverse;
+        }
+    </style> -->
+    <style>
+        .fade-enter, .fade-leave-to{
+            opacity: 0;
+        }
+        .fade-enter-active,.fade-leave-active {
+            transition: opacity 3s;
+        }
+    </style>
+</head>
+    <!-- animate.css库提供的是@keyframes的动画，也就是css3的动画效果。 -->
+<body>
+    <div id="root">
+        <transition :duration="{enter: 5000, leave: 10000}"
+                    name="fade" 
+                    appear
+                    enter-active-class="animated swing fade-enter-active" 
+                    leave-active-class="animated shake fade-leave-active"
+                    appear-active-class="animated swing">
+            <div v-if="show">hello world</div>
+        </transition>
+        <button @click="handleClick">toggle</button>
+        <!-- 第一次显示有动画，使用appear，appear-active-class="animated swing"。过渡和动画一起使用的，时间不一样的话，加一个type="transition"，这样时间就会按照transition的了。当然了我们还能对这个时长进行自定义，可以写 ：duration="10000",把时长定义为10s，还可以设置的复杂点，：duration="{enter：5000， leave：10000}" 进入时间5s，离开时间10s-->
+    </div>
+    
+    <script>
+        var vm = new Vue({
+            el: '#root',
+            data: {
+                show: true
+            },
+            methods:{
+                handleClick: function(){
+                    this.show = !this.show
+                }
+            }
+        })
+    </script>
+</body>
+</html>
